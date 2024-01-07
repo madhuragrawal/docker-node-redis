@@ -1,0 +1,23 @@
+services:
+
+  # Backend API
+  docker-node-redis:
+    container_name: backend
+    # image: node:20.10.0
+    build: ./
+    command: npm start
+    working_dir: /usr/src/docker-node-redis
+    environment:
+      REDIS_URI: redis://redis:6379
+    links:
+      - redis
+    ports:
+      - 3001:3001
+    volumes:
+      - ./:/usr/src/docker-node-redis
+
+  # Redis
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
